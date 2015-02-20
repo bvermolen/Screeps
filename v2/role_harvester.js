@@ -14,35 +14,36 @@ module.exports = {
 		if(_.isString(result)) {
 			return true;
 		}
-		return false;
+		return result;
 	},
 	
 	action: function (creep) {
-		var spawn = Game.spawns.Spawn1;
-		var targets = creep.room.find(Game.SOURCES, { 
+		var spawn = require('creepManager').getSpawn();
+
+		var target = creep.pos.findClosest(Game.SOURCES, { 
 			filter: function(object) { 
 				return object.energy >= 10;
 			}
 		});
 
-		if(targets.length > 0) {
+		if(target!==null) {
 			if(creep.energy < creep.energyCapacity) {
-				creep.memory.action = 'Harvesting ' + targets[0].id;
-				creep.moveTo(targets[0]);
-				creep.harvest(targets[0]);
+				creep.say('Harvesting ' + target.id);
+				creep.moveTo(target);
+				creep.harvest(target);
 			} else {
-				creep.memory.action = 'On route to delivery energy to ' + spawn.name;
+				creep.say('On route to delivery energy to ' + spawn.name);
 				creep.moveTo(spawn);
 				creep.transferEnergy(spawn);
 			}
 		} else if (!creep.pos.inRangeTo(spawn, 10)) {
-			creep.memory.action = 'Returning to ' + spawn.name;
+			creep.say('Returning to ' + spawn.name);
 			creep.moveTo(spawn);
 		} else if (creep.pos.inRangeTo(spawn, 5)) {
-			creep.memory.action = 'Create distance from spawn ' + spawn.name;
+			creep.say('Create distance from spawn ' + spawn.name);
 			creep.moveTo(25, 25);
 		} else {
-			creep.memory.action = 'Waiting for sources';
+			creep.say('Waiting for sources');
 		}
 	}
 }

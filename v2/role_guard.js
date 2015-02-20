@@ -14,16 +14,16 @@ module.exports = {
 		if(_.isString(result)) {
 			return true;
 		}
-		return false;
+		return result;
 	},
 	
 	action: function (creep) {
-		var spawn = Game.spawns.Spawn1;
+		var spawn = require('creepManager').getSpawn();
 		var targets = creep.room.find(Game.HOSTILE_CREEPS);
 		
 		if(targets.length > 0) {
 			var target = targets[0];
-			creep.memory.action = 'Attacking ' + target.name;
+			creep.say('Attacking ' + target.name);
 			creep.moveTo(target);
 			
 			if(creep.pos.inRangeTo(target, 2)) {
@@ -33,13 +33,13 @@ module.exports = {
 			}
 			
 		} else if (!creep.pos.inRangeTo(spawn, 10)) {
-			creep.memory.action = 'Returning to ' + spawn.name;
+			creep.say('Returning to ' + spawn.name);
 			creep.moveTo(spawn);
 		} else if (creep.pos.inRangeTo(spawn, 5)) {
-			creep.memory.action = 'Create distance from spawn ' + spawn.name;
+			creep.say('Create distance from spawn ' + spawn.name);
 			creep.moveTo(25, 25);
 		} else {
-			creep.memory.action = 'Waiting for enemies';
+			creep.say('Waiting for enemies');
 		}
 	}
 }

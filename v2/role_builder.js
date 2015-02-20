@@ -14,30 +14,29 @@ module.exports = {
 		if(_.isString(result)) {
 			return true;
 		}
-		return false;
+		return result;
 	},
 	
 	action: function (creep) {
-		var spawn = Game.spawns.Spawn1;
-	 
+		var spawn = require('creepManager').getSpawn();
 	 
 		var targets = creep.room.find(Game.CONSTRUCTION_SITES);
 		if(targets.length > 0) {
 			var target = targets[0];
 			if(creep.energy === 0) {
-				creep.memory.action = 'On route to collect energy from ' + spawn.id;
+				creep.say('On route to collect energy from ' + spawn.id);
 				creep.moveTo(spawn);
 				spawn.transferEnergy(creep);
 			} else {
-				creep.memory.action = 'Building ' + target.id;
+				creep.say('Building ' + target.id);
 				creep.moveTo(target);
 				creep.build(target);
 			}
 		} else if (!creep.pos.inRangeTo(spawn, 10)) {
-			creep.memory.action = 'Returning to ' + spawn.name;
+			creep.say('Returning to ' + spawn.name);
 			creep.moveTo(spawn);
 		} else if (creep.pos.inRangeTo(spawn, 5)) {
-			creep.memory.action = 'Create distance from spawn ' + spawn.name;
+			creep.say('Create distance from spawn ' + spawn.name);
 			creep.moveTo(25, 25);
 		} else {
 			creep.memory.action = 'Waiting for work';

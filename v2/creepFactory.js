@@ -15,10 +15,10 @@
 	},
 
 	action: function () {
-		var spawn = Game.spawns.Spawn1;
+		var spawn = require('creepManager').getSpawn();
+		var _ = require('lodash');
 		
 		if(spawn.spawning === null) {
-			var _ = require('lodash');
 		
 		    var roles = require('creepManager').getRoles();
 		
@@ -38,13 +38,15 @@
 				if(threshold > currentCreeps) {
 					// todo: check available energy?
 					var result = require('creepManager').getRoleObject(creepRole).create(spawn);
-					if(_.isString(result)) {
+					if(result===false) {
 						console.log('Start spawning ' + creepRole+": "+result);
 						// todo: add increase of role numbers?
 						break;
 					}
 				}
 			}
+		} else {
+			spawn.memory.time = Game.time;
 		}
 	}
 }
