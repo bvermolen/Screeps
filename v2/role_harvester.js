@@ -18,7 +18,7 @@ module.exports = {
 	},
 	
 	action: function (creep) {
-		var spawn = require('creepManager').getSpawn();
+		var spawn = require('control').getSpawn();
 
 		var target = creep.pos.findClosest(Game.SOURCES, { 
 			filter: function(object) { 

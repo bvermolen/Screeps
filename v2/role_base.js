@@ -3,7 +3,7 @@
  */
 var base = {
 	idle: function(creep) {
-		var spawn = require('creepManager').getSpawn();
+		var spawn = require('control').getSpawn();
 		
 		if (!creep.pos.inRangeTo(spawn, 6)) {
 			creep.say('Returning to ' + spawn.name);

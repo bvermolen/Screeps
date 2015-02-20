@@ -18,7 +18,7 @@ module.exports = {
 	},
 	
 	action: function (creep) {
-		var spawn = require('creepManager').getSpawn();
+		var spawn = require('control').getSpawn();
 		var targets = creep.room.find(Game.HOSTILE_CREEPS);
 		
 		if(targets.length > 0) {

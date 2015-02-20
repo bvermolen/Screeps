@@ -16,7 +16,7 @@
 	},
 
 	action: function () {
-		var spawn = require('creepManager').getSpawn();
+		var spawn = require('control').getSpawn();
 		var _ = require('lodash');
 		
 		if(spawn.spawning === null) {
