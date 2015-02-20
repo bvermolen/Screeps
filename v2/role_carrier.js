@@ -1,5 +1,5 @@
 /**
- * harvester
+ * carrier
  */
 module.exports = {
 	
@@ -7,7 +7,7 @@ module.exports = {
 		var _ = require('lodash');
 		
 		var bodyParts = [Game.WORK, Game.WORK, Game.CARRY, Game.MOVE, Game.MOVE];
-		var role = 'harvester';
+		var role = 'carrier';
 		var numCreeps = require('creepManager').getRoleNumbers(role);
 		var result = spawn.createCreep(bodyParts, role + '_' + numCreeps, {'role':role});
 		
@@ -20,20 +20,21 @@ module.exports = {
 	action: function (creep) {
 		var spawn = require('creepManager').getSpawn();
 
-		var target = creep.pos.findClosest(Game.SOURCES, { 
+		var target = creep.pos.findClosest(Game.MY_CREEPS, { 
 			filter: function(object) { 
-				return object.energy >= 10;
+				return object.memory.role == 'harvester' && object.energy >= 25;
 			}
 		});
 
-		if(target!==null) {
-			if(creep.energy < creep.energyCapacity) {
-				creep.say('Harvesting ' + target.id);
-				creep.moveTo(target);
-				creep.harvest(target);
-			} else {
-				creep.say('Waiting for carrier');
-			}
+		if(creep.pos.inRangeTo(spawn, 1) && creep.energy > 0) {
+			creep.transferEnergy(spawn);
+			creep.say('Deliver Energy to' + spawn.name);
+		} else if(creep.energy == creep.energyCapacity) {
+			creep.moveTo(spawn);
+			creep.say('On route to delivery energy to ' + spawn.name);
+		} else if(target!==null) {
+			creep.moveTo(spawn);
+			target.transferEnergy(creep);
 		} else if (!creep.pos.inRangeTo(spawn, 10)) {
 			creep.say('Returning to ' + spawn.name);
 			creep.moveTo(spawn);

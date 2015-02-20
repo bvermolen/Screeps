@@ -6,6 +6,7 @@
 	 getThreshold: function(role) {
 		var thresholds = {
 			'harvester': 2,
+			'carrier': 2,
 			'builder': 1,
 			'guard': 3,
 			'medic': 1
@@ -23,7 +24,8 @@
 		    var roles = require('creepManager').getRoles();
 		
 			var creepBodies = {
-				'harvester': [Game.WORK, Game.WORK, Game.CARRY, Game.MOVE, Game.MOVE],
+				'harvester': [Game.WORK, Game.WORK, Game.WORK, Game.CARRY, Game.MOVE],
+				'carrier': [Game.CARRY, Game.CARRY, Game.CARRY, Game.MOVE, Game.MOVE],
 				'guard': [Game.TOUGH, Game.MOVE, Game.RANGED_ATTACK, Game.ATTACK, Game.ATTACK],
 				'builder': [Game.TOUGH, Game.WORK, Game.WORK, Game.MOVE, Game.CARRY],
 				'medic': [Game.TOUGH, Game.MOVE, Game.MOVE, Game.HEAL, Game.HEAL],

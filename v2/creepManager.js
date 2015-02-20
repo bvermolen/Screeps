@@ -38,6 +38,7 @@ var creepManager = {
 	getRoles: function() {
 		var roles = [
 				'harvester',
+				'carrier',
 				'builder',
 				'guard',
 				'medic'
