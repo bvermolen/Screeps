@@ -28,8 +28,6 @@
                     console.log('Start spawning ' + cType+": "+result);
                     creepTypes[cType]++;
                     break;
-                } else {
-                    console.log('Could not start spawning ' + creepRole+": "+result);
                 }
             }
         }
