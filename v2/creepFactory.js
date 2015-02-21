@@ -21,15 +21,7 @@
 		
 		if(spawn.spawning === null) {
 		
-		    var roles = require('creepManager').getRoles();
-		
-			var creepBodies = {
-				'miner': [Game.WORK, Game.WORK, Game.WORK, Game.CARRY, Game.MOVE],
-				'carrier': [Game.CARRY, Game.CARRY, Game.CARRY, Game.MOVE, Game.MOVE],
-				'guard': [Game.TOUGH, Game.MOVE, Game.RANGED_ATTACK, Game.ATTACK, Game.ATTACK],
-				'builder': [Game.TOUGH, Game.WORK, Game.WORK, Game.MOVE, Game.CARRY],
-				'medic': [Game.TOUGH, Game.MOVE, Game.MOVE, Game.HEAL, Game.HEAL],
-			}
+			var roles = require('creepManager').getRoles();
 			
 			for(var i in roles) {
 			    var creepRole = roles[i];

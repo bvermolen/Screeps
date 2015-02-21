@@ -6,7 +6,7 @@ module.exports = {
 	create: function(spawn) {
 		var _ = require('lodash');
 		
-		var bodyParts = [Game.WORK, Game.WORK, Game.CARRY, Game.MOVE, Game.MOVE];
+		var bodyParts = [Game.CARRY, Game.CARRY, Game.MOVE, Game.MOVE, Game.MOVE];
 		var role = 'carrier';
 		var numCreeps = require('creepManager').getRoleNumbers(role);
 		var result = spawn.createCreep(bodyParts, role + '_' + numCreeps, {'role':role});
@@ -20,11 +20,13 @@ module.exports = {
 	action: function (creep) {
 		var spawn = require('control').getSpawn();
 
-		var target = creep.pos.findClosest(Game.MY_CREEPS, { 
+		var targets = _.sortBy(spawn.room.find(Game.MY_CREEPS, { 
 			filter: function(object) { 
 				return object.memory.role == 'miner' && object.energy >= 25;
 			}
-		});
+		}), 'energy');
+		
+		var target = _.last(targets);
 
 		if(creep.pos.inRangeTo(spawn, 1) && creep.energy > 0) {
 			creep.transferEnergy(spawn);

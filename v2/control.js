@@ -16,14 +16,21 @@
 		var spawn = this.getSpawn();
 		
 		if(!Memory.sources) {
+		    Memory.sources = [];
+		    
 			var sources = spawn.room.find(Game.SOURCES);
-			for(var source in sources)
+			for(var i in sources)
 			{
+			    var source = sources[i];
+			    
 				var path = source.pos.findPathTo(spawn);
 				
 				if(path.length > 0) {
-					source.distance = path.length;
-					Memory.sources[source.id] = source;
+					Memory.sources[source.id] = { 
+					    id: source.id,
+					    pos: source.pos,
+					    distance: path.length
+					};
 				}
 			}
 		}

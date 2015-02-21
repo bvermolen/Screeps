@@ -39,9 +39,9 @@ var creepManager = {
 		var roles = [
 				'miner',
 				'carrier',
-				'builder',
 				'guard',
-				'medic'
+				'medic',
+				'builder',
 				];
 		return roles;
 	},
