@@ -5,7 +5,7 @@
 	 
 	 getThreshold: function(role) {
 		var thresholds = {
-			'harvester': 2,
+			'miner': 2,
 			'carrier': 2,
 			'builder': 1,
 			'guard': 3,
@@ -24,7 +24,7 @@
 		    var roles = require('creepManager').getRoles();
 		
 			var creepBodies = {
-				'harvester': [Game.WORK, Game.WORK, Game.WORK, Game.CARRY, Game.MOVE],
+				'miner': [Game.WORK, Game.WORK, Game.WORK, Game.CARRY, Game.MOVE],
 				'carrier': [Game.CARRY, Game.CARRY, Game.CARRY, Game.MOVE, Game.MOVE],
 				'guard': [Game.TOUGH, Game.MOVE, Game.RANGED_ATTACK, Game.ATTACK, Game.ATTACK],
 				'builder': [Game.TOUGH, Game.WORK, Game.WORK, Game.MOVE, Game.CARRY],
@@ -40,7 +40,7 @@
 				if(threshold > currentCreeps) {
 					// todo: check available energy?
 					var result = require('creepManager').getRoleObject(creepRole).create(spawn);
-					if(result===false) {
+					if(result===true) {
 						console.log('Start spawning ' + creepRole+": "+result);
 						// todo: add increase of role numbers?
 						break;

@@ -22,7 +22,7 @@ module.exports = {
 
 		var target = creep.pos.findClosest(Game.MY_CREEPS, { 
 			filter: function(object) { 
-				return object.memory.role == 'harvester' && object.energy >= 25;
+				return object.memory.role == 'miner' && object.energy >= 25;
 			}
 		});
 
@@ -33,7 +33,7 @@ module.exports = {
 			creep.moveTo(spawn);
 			creep.say('On route to delivery energy to ' + spawn.name);
 		} else if(target!==null) {
-			creep.moveTo(spawn);
+			creep.moveTo(target);
 			target.transferEnergy(creep);
 		} else if (!creep.pos.inRangeTo(spawn, 10)) {
 			creep.say('Returning to ' + spawn.name);
@@ -42,7 +42,7 @@ module.exports = {
 			creep.say('Create distance from spawn ' + spawn.name);
 			creep.moveTo(25, 25);
 		} else {
-			creep.say('Waiting for sources');
+			creep.say('Waiting for miners');
 		}
 	}
 }

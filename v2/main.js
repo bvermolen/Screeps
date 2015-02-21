@@ -9,6 +9,8 @@ for(var sName in Game.spawns) {
 	spawn.memory.posY = spawn.pos.y;
 }
 
+//require('control').action();
+
 require('creepManager').action();
 
 require('creepFactory').action();
