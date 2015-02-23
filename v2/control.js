@@ -15,8 +15,8 @@
 	{
 		var spawn = this.getSpawn();
 		
-		if(!Memory.sources) {
-		    Memory.sources = [];
+		if(!spawn.memory.sources) {
+		    spawn.memory.sources = Array();
 		    
 			var sources = spawn.room.find(Game.SOURCES);
 			for(var i in sources)
@@ -26,26 +26,20 @@
 				var path = source.pos.findPathTo(spawn);
 				
 				if(path.length > 0) {
-					Memory.sources[source.id] = { 
-					    id: source.id,
-					    pos: source.pos,
-					    distance: path.length
-					};
+					spawn.memory.sources.push({ 
+						id: source.id,
+						//pos: source.pos,
+						distance: path.length
+					});
 				}
 			}
+			spawn.memory.sources = _.sortBy(spawn.memory.sources, 'distance');
 		}
 		
-		/*
-		var nextUnfilledSource = spawn.pos.findClosest(Game.SOURCES, Memory.Sources, {
-			filter: function(object) {
-				return object.activeMinders < 2;
-			}
-		});
-		*/
-		
-		// find unassigned miners and assign them to a source.
-		// assign 2 miner per source point, starting with the closest
-		// assign 2 carriers per source point, starting with the closest
+		// loop through sources
+		//	count active miners, if <2 then assign unassigned miner
+		//	count active carriers, if <2 then assign unassigned carriers
+
 	},
 	
 	construction: function()
