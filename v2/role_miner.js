@@ -35,6 +35,8 @@ module.exports = {
 			} else {
 				creep.say('Waiting for carrier');
 			}
+		} else {
+			this.idle(creep);
 		}
 	}
 }

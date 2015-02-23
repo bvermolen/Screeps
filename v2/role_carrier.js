@@ -26,25 +26,24 @@ module.exports = {
 			}
 		}), 'energy');
 		
-		var target = _.last(targets);
+		if(targets.length > 0)
+		{
+			var target = _.last(targets);
 
-		if(creep.pos.inRangeTo(spawn, 1) && creep.energy > 0) {
-			creep.transferEnergy(spawn);
-			creep.say('Deliver Energy to' + spawn.name);
-		} else if(creep.energy == creep.energyCapacity) {
-			creep.moveTo(spawn);
-			creep.say('On route to delivery energy to ' + spawn.name);
-		} else if(target!==null) {
-			creep.moveTo(target);
-			target.transferEnergy(creep);
-		} else if (!creep.pos.inRangeTo(spawn, 10)) {
-			creep.say('Returning to ' + spawn.name);
-			creep.moveTo(spawn);
-		} else if (creep.pos.inRangeTo(spawn, 5)) {
-			creep.say('Create distance from spawn ' + spawn.name);
-			creep.moveTo(25, 25);
-		} else {
-			creep.say('Waiting for miners');
+			if(creep.pos.inRangeTo(spawn, 1) && creep.energy > 0) {
+				creep.transferEnergy(spawn);
+				creep.say('Deliver Energy to' + spawn.name);
+				return;
+			} else if(creep.energy == creep.energyCapacity) {
+				creep.moveTo(spawn);
+				creep.say('On route to delivery energy to ' + spawn.name);
+				return;
+			} else if(target!==null) {
+				creep.moveTo(target);
+				target.transferEnergy(creep);
+				return;
+			}
 		}
+		this.idle(creep);
 	}
 }
