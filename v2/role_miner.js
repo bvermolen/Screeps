@@ -20,23 +20,21 @@ module.exports = {
 	action: function (creep) {
 		var spawn = require('control').getSpawn();
 
-		var target = null;
-		
-		if(creep.memory.sourceID===null) {
-			creep.memory.sourceID = creep.pos.findClosest(Game.SOURCES).id;
-		}
-		target = Game.getObjectById(creep.memory.sourceID);
+		if(creep.memory.sourceID!==null) 
+		{
+			var source = Game.getObjectById(creep.memory.sourceID);
 
-		if(target!==null) {
-			if(creep.energy < creep.energyCapacity) {
-				creep.say('Mining ' + target.id);
-				creep.moveTo(target);
-				creep.harvest(target);
-			} else {
-				creep.say('Waiting for carrier');
+			if(source!==null) {
+				if(creep.energy < creep.energyCapacity) {
+					creep.say('Mining ' + source.id);
+					creep.moveTo(source);
+					creep.harvest(source);
+				} else {
+					creep.say('Waiting for carrier');
+				}
+				return;
 			}
-		} else {
-			this.idle(creep);
 		}
+		this.idle(creep);
 	}
 }

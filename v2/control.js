@@ -36,10 +36,48 @@
 			spawn.memory.sources = _.sortBy(spawn.memory.sources, 'distance');
 		}
 		
-		// loop through sources
-		//	count active miners, if <2 then assign unassigned miner
-		//	count active carriers, if <2 then assign unassigned carriers
-
+		var unassignedMiners = _.sortBy(spawn.room.find(Game.MY_CREEPS, { 
+			filter: function(object) { 
+				return object.memory.role == 'miner' && object.memory.sourceID === null;
+			}
+		}), 'ticksToLive');
+		
+		var unassignedCarriers = _.sortBy(spawn.room.find(Game.MY_CREEPS, { 
+			filter: function(object) { 
+				return object.memory.role == 'carrier' && object.memory.sourceID === null;
+			}
+		}), 'ticksToLive');
+		
+		for(var i in spawn.memory.sources)
+		{
+			var source = sources[i];
+				
+			// miners
+			var activeMiners = source.room.find(Game.MY_CREEPS, { 
+				filter: function(object) { 
+					return object.memory.role == 'miner' && object.memory.sourceID === source.id;
+				}
+			});
+			
+			if(activeMiners.length < 2 && unassignedMiners.length > 0) {
+				var miners = _.pullAt(unassignedMiners, 0);
+				
+				miners[0].memory.sourceID = source.id;
+			}
+			
+			// carriers
+			var activeCarriers = source.room.find(Game.MY_CREEPS, { 
+				filter: function(object) { 
+					return object.memory.role == 'carrier' && object.memory.sourceID === source.id;
+				}
+			});
+			
+			if(activeCarriers.length < 2 && unassignedCarriers.length > 0) {
+				var carriers = _.pullAt(unassignedCarriers, 0);
+				
+				carriers[0].memory.sourceID = source.id;
+			}
+		}
 	},
 	
 	construction: function()
