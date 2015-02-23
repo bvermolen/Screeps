@@ -11,46 +11,53 @@
 		}
 	},
 	
+	fillSpawnSources: function()
+	{
+		var spawn = this.getSpawn();
+		spawn.memory.sources = Array();
+
+		var sources = spawn.room.find(Game.SOURCES);
+		for(var i in sources)
+		{
+		    var source = sources[i];
+		    
+			var path = source.pos.findPathTo(spawn);
+			
+			if(path.length > 0) {
+				spawn.memory.sources.push({ 
+					id: source.id,
+					//pos: source.pos,
+					distance: path.length
+				});
+			}
+		}
+		spawn.memory.sources = _.sortBy(spawn.memory.sources, 'distance');
+	},
+	
 	harvesting: function()
 	{
 		var spawn = this.getSpawn();
 		
 		if(!spawn.memory.sources) {
-		    spawn.memory.sources = Array();
-		    
-			var sources = spawn.room.find(Game.SOURCES);
-			for(var i in sources)
-			{
-			    var source = sources[i];
-			    
-				var path = source.pos.findPathTo(spawn);
-				
-				if(path.length > 0) {
-					spawn.memory.sources.push({ 
-						id: source.id,
-						//pos: source.pos,
-						distance: path.length
-					});
-				}
-			}
-			spawn.memory.sources = _.sortBy(spawn.memory.sources, 'distance');
+		    this.fillSpawnSources();
 		}
 		
 		var unassignedMiners = _.sortBy(spawn.room.find(Game.MY_CREEPS, { 
-			filter: function(object) { 
-				return object.memory.role == 'miner' && object.memory.sourceID === null;
+			filter: function(object) {
+				return object.spawning === false && object.memory.role == 'miner' && object.memory.sourceID === null;
 			}
 		}), 'ticksToLive');
 		
 		var unassignedCarriers = _.sortBy(spawn.room.find(Game.MY_CREEPS, { 
 			filter: function(object) { 
-				return object.memory.role == 'carrier' && object.memory.sourceID === null;
+				return object.spawning === false && object.memory.role == 'carrier' && object.memory.sourceID === null;
 			}
 		}), 'ticksToLive');
 		
 		for(var i in spawn.memory.sources)
 		{
-			var source = sources[i];
+			var sourceMemory = spawn.memory.sources[i];
+			var source = Game.getObjectById(sourceMemory.id);
 				
 			// miners
 			var activeMiners = source.room.find(Game.MY_CREEPS, { 
@@ -60,9 +67,9 @@
 			});
 			
 			if(activeMiners.length < 2 && unassignedMiners.length > 0) {
-				var miners = _.pullAt(unassignedMiners, 0);
-				
-				miners[0].memory.sourceID = source.id;
+				var miner = _.take(unassignedMiners);
+				unassignedMiners = _.drop(unassignedMiners);
+				miner.memory.sourceID = source.id;
 			}
 			
 			// carriers
@@ -73,9 +80,9 @@
 			});
 			
 			if(activeCarriers.length < 2 && unassignedCarriers.length > 0) {
-				var carriers = _.pullAt(unassignedCarriers, 0);
-				
-				carriers[0].memory.sourceID = source.id;
+				var carrier = _.take(unassignedCarriers);
+				unassignedCarriers = _.drop(unassignedCarriers);
+				carrier.memory.sourceID = source.id;
 			}
 		}
 	},
