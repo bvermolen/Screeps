@@ -2,6 +2,7 @@
  * role_base
  */
 var base = {
+	
 	idle: function(creep) {
 		var spawn = require('control').getSpawn();
 		

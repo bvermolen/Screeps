@@ -11,9 +11,7 @@
 		}
 	},
 	
-	fillSpawnSources: function()
-	{
-		var spawn = this.getSpawn();
+	fillSpawnSources: function(spawn) {
 		spawn.memory.sources = Array();
 
 		var sources = spawn.room.find(Game.SOURCES);
@@ -21,26 +19,23 @@
 		{
 		    var source = sources[i];
 		    
-			var path = source.pos.findPathTo(spawn);
+			var paths = source.pos.findPathTo(spawn);
 			
-			if(path.length > 0) {
+			if(paths.length > 0) {
 				spawn.memory.sources.push({ 
 					id: source.id,
 					//pos: source.pos,
-					distance: path.length
+					distance: paths.length,
+					pathStatus: null,
+					pathInvalid: 0,
+					paths: paths,
 				});
 			}
 		}
 		spawn.memory.sources = _.sortBy(spawn.memory.sources, 'distance');
 	},
 	
-	harvesting: function()
-	{
-		var spawn = this.getSpawn();
-		
-		if(!spawn.memory.sources) {
-		    this.fillSpawnSources();
-		}
+	harvesting: function(spawn) {
 		
 		var unassignedMiners = _.sortBy(spawn.room.find(Game.MY_CREEPS, { 
 			filter: function(object) {
@@ -87,21 +82,92 @@
 		}
 	},
 	
-	construction: function()
-	{
+	constructPathPlan: function(spawn, sourceMemory) {
+		var source = Game.getObjectById(sourceMemory.id);
 		
+		sourceMemory.pathInvalid = 0;
+		for(var p in sourceMemory.paths) {
+		    var path = sourceMemory.paths[p];
+
+	        var res = spawn.room.createConstructionSite(path, Game.STRUCTURE_ROAD);
+	        if(res===Game.OK) {
+	            console.log('Construct path at '+path.x+'.'+path.y);     
+	        } else {
+	            sourceMemory.pathInvalid++; 
+	        }
+		}
+		sourceMemory.pathStatus = 'building';
 	},
 	
-	defence: function()
-	{
+	constructPathCheckCompleted: function(spawn, sourceMemory) {
+	    var posCompleted = 0;
+	    
+		for(var p in sourceMemory.paths) {
+		    var path = sourceMemory.paths[p];
+	    
+		    var pathFinished = _.some(spawn.room.lookAt(path), function (obj) { 
+		        return obj.type==='structure' && obj.structure.structureType === Game.STRUCTURE_ROAD;
+		    });
+		    
+		    if(pathFinished) {
+		        posCompleted++;
+		    }
+		}
 		
+		if(sourceMemory.paths.length===(sourceMemory.pathInvalid+posCompleted)) {
+		    sourceMemory.pathStatus = 'completed';
+		}
 	},
 	
-	action: function()
-	{
-		this.harvesting();
-		this.construction();
-		this.defence();
+	constructPath: function(spawn) {
+		// path for source - spawn
+		var sourceMemoryBuilding = _.find(spawn.memory.sources, function(obj) {
+		   return obj.pathStatus === 'building';
+		});
+		if(sourceMemoryBuilding) {
+		    if(!this.constructPathCheckCompleted(spawn, sourceMemoryBuilding)) {
+		        return;
+		    }
+		}
+		
+		var sourceMemoryNull = _.find(spawn.memory.sources, function(obj) {
+		   return obj.pathStatus === null;
+		});
+		if(sourceMemoryNull) {
+		    this.constructPathPlan(spawn, sourceMemoryNull);
+		}
+	    
+	},
+	
+	construction: function(spawn) {
+	    
+	    this.constructPath(spawn);
+
+		// defence structures at exits
+		/*
+			build a funnel with defensive structures
+		*/
+	},
+	
+	defence: function(spawn) {
+		// fill defence structures with guardRange
+		
+		// set flag at the exits of the map.
+		// create a squad per flag (2 guardClose, 2 guardRange, 1 medic)
+		// locate squads near spawn
+		// as soon there is a squad per flag, move squads to the flags
+	},
+	
+	action: function() {
+		var spawn = this.getSpawn();
+		
+		if(!spawn.memory.sources) {
+		    this.fillSpawnSources(spawn);
+		}
+		
+		this.harvesting(spawn);
+		this.construction(spawn);
+		this.defence(spawn);
 	}
 }
 

@@ -4,9 +4,7 @@
 module.exports = {
 	
 	create: function(spawn) {
-		var _ = require('lodash');
-		
-		var bodyParts = [Game.TOUGH, Game.WORK, Game.WORK, Game.MOVE, Game.CARRY];
+		var bodyParts = [Game.MOVE, Game.WORK, Game.WORK, Game.CARRY, Game.CARRY];
 		var role = 'builder';
 		var numCreeps = require('creepManager').getRoleNumbers(role);
 		var result = spawn.createCreep(bodyParts, role + '_' + numCreeps, {'role':role});
@@ -20,20 +18,32 @@ module.exports = {
 	action: function (creep) {
 		var spawn = require('control').getSpawn();
 	 
-		var targets = creep.room.find(Game.CONSTRUCTION_SITES);
-		if(targets.length > 0) {
-			var target = targets[0];
-			if(creep.energy === 0) {
-				creep.say('On route to collect energy from ' + spawn.id);
-				creep.moveTo(spawn);
-				spawn.transferEnergy(creep);
-			} else {
-				creep.say('Building ' + target.id);
-				creep.moveTo(target);
-				creep.build(target);
+	 	var target = spawn.pos.findClosest(Game.CONSTRUCTION_SITES, {
+			filter: function(object) {
+				return object.my === true;
 			}
-		} else {
-			this.idle(creep);
+		});
+		
+		if(target!==null) {
+			if(creep.energy < creep.energyCapacity && creep.pos.inRangeTo(spawn, 1)) {
+				spawn.transferEnergy(creep);
+				creep.say('Collecting energy from ' + spawn.id);
+				return;
+			} else if(creep.energy === 0) {
+				creep.moveTo(spawn);
+				creep.say('On route to collect energy from ' + spawn.id);
+				return;
+			} else if (creep.energy > 0 && creep.pos.inRangeTo(target, 1)) {
+				creep.build(target);
+				creep.say('Building ' + target.id);
+				return;
+			} else if (creep.energy === creep.energyCapacity) {
+				creep.moveTo(target);
+				creep.say('Moving to ' + target.id);
+				return;
+			}
+			
 		}
+		this.idle(creep);
 	}
 }

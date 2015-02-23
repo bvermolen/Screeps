@@ -4,8 +4,6 @@
 module.exports = {
 	
 	create: function(spawn) {
-		var _ = require('lodash');
-		
 		var bodyParts = [Game.CARRY, Game.CARRY, Game.MOVE, Game.MOVE, Game.MOVE];
 		var role = 'carrier';
 		var numCreeps = require('creepManager').getRoleNumbers(role);

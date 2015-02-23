@@ -1,6 +1,9 @@
 /**
  * main
  */
+
+var _ = require('lodash');
+
 for(var sName in Game.spawns) {
 	var spawn = Game.spawns[sName];
 	spawn.memory.energy = spawn.energy;

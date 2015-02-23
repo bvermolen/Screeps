@@ -7,8 +7,8 @@
 		var thresholds = {
 			'miner': 2,
 			'carrier': 2,
-			'builder': 1,
 			'guard': 3,
+			'builder': 1,
 			'medic': 1
 		};
 		
@@ -17,7 +17,6 @@
 
 	action: function () {
 		var spawn = require('control').getSpawn();
-		var _ = require('lodash');
 		
 		if(spawn.spawning === null) {
 		
