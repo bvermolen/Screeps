@@ -1,0 +1,6 @@
+CreepFactory:
+    After all creeps have been build, set flag levelCompleted
+
+Control:
+    Create list creeps/buildings for each level
+    Monitor sections for levelCompleted flag

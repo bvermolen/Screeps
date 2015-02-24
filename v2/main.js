@@ -12,8 +12,11 @@ for(var sName in Game.spawns) {
 	spawn.memory.posY = spawn.pos.y;
 }
 
-require('control').action();
+var spawn = this.getSpawn();
 
-require('creepManager').action();
+if(spawn  !== null) {
+	require('control').action(spawn);
+	require('creepFactory').action(spawn);
+}
 
-require('creepFactory').action();
+require('creepManager').action(spawn);

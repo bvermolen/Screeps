@@ -3,11 +3,11 @@
  */
 module.exports = {
 	
-	create: function(spawn) {
+	create: function(spawn, creepMemory) {
 		var bodyParts = [Game.TOUGH, Game.MOVE, Game.MOVE, Game.HEAL];
-		var role = 'medic';
-		var numCreeps = require('creepManager').getRoleNumbers(role);
-		var result = spawn.createCreep(bodyParts, role + '_' + numCreeps, {'role':role});
+		creepMemory.role = 'medic';
+		var numCreeps = require('creepManager').getRoleNumbers(creepMemory.role);
+		var result = spawn.createCreep(bodyParts, creepMemory.role + '_' + numCreeps, creepMemory);
 		
 		if(_.isString(result)) {
 			return true;

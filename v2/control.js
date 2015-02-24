@@ -9,6 +9,7 @@
 		for(var s in spawns) {
 			return spawns[s];
 		}
+		return null;
 	},
 	
 	fillSpawnSources: function(spawn) {
@@ -29,6 +30,8 @@
 					pathStatus: null,
 					pathInvalid: 0,
 					paths: paths,
+					activeMiners: 0,
+					activeCarriers: 0,
 				});
 			}
 		}
@@ -60,6 +63,7 @@
 					return object.memory.role == 'miner' && object.memory.sourceID === source.id;
 				}
 			});
+			sourceMemory.activeMiners = activeMiners;
 			
 			if(activeMiners.length < 2 && unassignedMiners.length > 0) {
 				var miner = _.take(unassignedMiners);
@@ -73,6 +77,7 @@
 					return object.memory.role == 'carrier' && object.memory.sourceID === source.id;
 				}
 			});
+			sourceMemory.activeCarriers = activeCarriers;
 			
 			if(activeCarriers.length < 2 && unassignedCarriers.length > 0) {
 				var carrier = _.take(unassignedCarriers);
@@ -131,7 +136,7 @@
 		}
 		
 		var sourceMemoryNull = _.find(spawn.memory.sources, function(obj) {
-		   return obj.pathStatus === null;
+		   return obj.pathStatus === null && obj.activeMiners > 0;
 		});
 		if(sourceMemoryNull) {
 		    this.constructPathPlan(spawn, sourceMemoryNull);
@@ -158,8 +163,7 @@
 		// as soon there is a squad per flag, move squads to the flags
 	},
 	
-	action: function() {
-		var spawn = this.getSpawn();
+	action: function(spawn) {
 		
 		if(!spawn.memory.sources) {
 		    this.fillSpawnSources(spawn);
