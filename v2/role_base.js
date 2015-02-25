@@ -4,8 +4,9 @@
 var base = {
 	
 	say: function(creep, message) {
-		creep.say(message);
-		console.log(creep.name + ': ' + message);
+		//creep.say(message);
+		//console.log(creep.name + ': ' + message);
+		creep.memory.message = message;
 	},
 	
 	idle: function(creep) {

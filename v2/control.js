@@ -86,8 +86,9 @@
 			var flagLocation = paths[flagPos];
 			
 			var flagName = spawn.room.name+'_exit_'+exit.exit;
-			var res = spawn.room.createFlag(flagLocation.x, flagLocation.y, flagName);
-			if(res===Game.OK) {
+			var result = spawn.room.createFlag(flagLocation.x, flagLocation.y, flagName);
+			
+			if(_.isString(result)) {
 				spawn.memory.flags.push({ 
 					name: flagName,
 					distance: paths.length,

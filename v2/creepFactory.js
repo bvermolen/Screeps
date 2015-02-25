@@ -45,7 +45,7 @@
 			this.addToQueue(spawn, 'medic', {squad: 1});
 		}
 		
-		if(spawn.spawning === null) {
+		if(spawn.spawning === null && spawn.memory.buildQueue > 0) {
 		
 			var creep = _.take(spawn.memory.buildQueue);
 			

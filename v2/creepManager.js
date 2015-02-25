@@ -27,6 +27,10 @@ var creepManager = {
 		for(var cName in Game.creeps) {
 			var creep = Game.creeps[cName];
 			
+			if(creep.spawning) {
+				continue;
+			}
+			
 			this.updateCreepMemory(creep);
 			
 			var obj = this.getRoleObject(creep.memory.role);
