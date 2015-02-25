@@ -4,7 +4,7 @@
 module.exports = {
 	
 	create: function(spawn, creepMemory) {
-		var bodyParts = [Game.TOUGH, Game.MOVE, Game.RANGED_ATTACK, Game.ATTACK, Game.ATTACK];
+		var bodyParts = [Game.TOUGH, Game.TOUGH, Game.MOVE, Game.RANGED_ATTACK, Game.ATTACK, Game.ATTACK];
 		creepMemory.role = 'guard';
 		var numCreeps = require('creepManager').getRoleNumbers(creepMemory.role);
 		var result = spawn.createCreep(bodyParts, creepMemory.role + '_' + numCreeps, creepMemory);
