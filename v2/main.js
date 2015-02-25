@@ -1,6 +1,7 @@
 /**
  * main
  */
+console.log('Time: '+Game.time);
 
 var _ = require('lodash');
 
@@ -12,7 +13,7 @@ for(var sName in Game.spawns) {
 	spawn.memory.posY = spawn.pos.y;
 }
 
-var spawn = this.getSpawn();
+var spawn = require('control').getSpawn();
 
 if(spawn  !== null) {
 	require('control').action(spawn);

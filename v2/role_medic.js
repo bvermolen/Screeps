@@ -31,7 +31,7 @@ module.exports = {
 				creep.rangedHeal(target);
 			}
 		} else {
-			this.idle(creep);
+			this.idleDefence(creep);
 		}
 	}
 }

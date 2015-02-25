@@ -25,7 +25,7 @@
 		}
 		return null;
 		
-	}
+	},
 	
 	action: function (spawn) {
 		
@@ -38,9 +38,9 @@
 			this.addToQueue(spawn, 'carrier');
 			this.addToQueue(spawn, 'guard', {squad: 1});
 			this.addToQueue(spawn, 'guard', {squad: 1});
-			this.addToQueue(spawn, 'guard', {squad: 1});
-			this.addToQueue(spawn, 'guard', {squad: 1});
 			this.addToQueue(spawn, 'builder');
+			this.addToQueue(spawn, 'guard', {squad: 1});
+			this.addToQueue(spawn, 'guard', {squad: 1});
 			this.addToQueue(spawn, 'builder');
 			this.addToQueue(spawn, 'medic', {squad: 1});
 		}
@@ -51,7 +51,7 @@
 			
 			var result = require('creepManager').getRoleObject(creep.role).create(spawn, creep.creepMemory);
 			if(result===true) {
-				console.log('Start spawning ' + creepRole+": "+result);
+				console.log('Start spawning ' + creep.role+": "+result);
 				spawn.memory.buildQueue = _.drop(spawn.memory.buildQueue);
 			}
 

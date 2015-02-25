@@ -31,7 +31,7 @@ module.exports = {
 			}
 			
 		} else {
-			this.idle(creep);
+			this.idleDefence(creep);
 		}
 	}
 }

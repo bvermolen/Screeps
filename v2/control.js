@@ -12,7 +12,35 @@
 		return null;
 	},
 	
-	fillSpawnSources: function(spawn) {
+	getExits: function(spawn) {
+		var exits = Array();
+		
+		var exit = null;
+
+		exit = spawn.room.find(Game.EXIT_TOP);
+		if(exit.length > 0) {
+			exits.push(exit[0]);
+		}
+
+		exit = spawn.room.find(Game.EXIT_BOTTOM);
+		if(exit.length > 0) {
+			exits.push(exit[0]);
+		}
+
+		exit = spawn.room.find(Game.EXIT_LEFT);
+		if(exit.length > 0) {
+			exits.push(exit[0]);
+		}
+
+		exit = spawn.room.find(Game.EXIT_RIGHT);
+		if(exit.length > 0) {
+			exits.push(exit[0]);
+		}
+		
+		return exits;
+	},
+	
+	setInitialSpawnMemory: function(spawn) {
 		spawn.memory.sources = Array();
 
 		var sources = spawn.room.find(Game.SOURCES);
@@ -36,6 +64,40 @@
 			}
 		}
 		spawn.memory.sources = _.sortBy(spawn.memory.sources, 'distance');
+	},
+	
+	setInitialFlagMemory: function(spawn) {
+		spawn.memory.flags = Array();
+
+		var exits = this.getExits(spawn);
+		
+		for(var i in exits) {
+			var exit = exits[i];
+			
+			var paths = spawn.pos.findPathTo(exit);
+			var flagPos = paths.length / 2;
+			if(paths.length < 5) {
+				flagPos = paths.length - 1;
+			} else if(flagPos < 5) {
+				flagPos = 5;
+			}
+			flagPos = Math.round(flagPos);
+			
+			var flagLocation = paths[flagPos];
+			
+			var flagName = spawn.room.name+'_exit_'+exit.exit;
+			var res = spawn.room.createFlag(flagLocation.x, flagLocation.y, flagName);
+			if(res===Game.OK) {
+				spawn.memory.flags.push({ 
+					name: flagName,
+					distance: paths.length,
+					posX: flagLocation.x,
+					posY: flagLocation.y,
+					squad: 1,
+				});
+			}
+		}
+		spawn.memory.flags = _.sortBy(spawn.memory.flags, 'distance');
 	},
 	
 	harvesting: function(spawn) {
@@ -63,7 +125,7 @@
 					return object.memory.role == 'miner' && object.memory.sourceID === source.id;
 				}
 			});
-			sourceMemory.activeMiners = activeMiners;
+			sourceMemory.activeMiners = activeMiners.length;
 			
 			if(activeMiners.length < 2 && unassignedMiners.length > 0) {
 				var miner = _.take(unassignedMiners);
@@ -77,7 +139,7 @@
 					return object.memory.role == 'carrier' && object.memory.sourceID === source.id;
 				}
 			});
-			sourceMemory.activeCarriers = activeCarriers;
+			sourceMemory.activeCarriers = activeCarriers.length;
 			
 			if(activeCarriers.length < 2 && unassignedCarriers.length > 0) {
 				var carrier = _.take(unassignedCarriers);
@@ -155,9 +217,11 @@
 	},
 	
 	defence: function(spawn) {
+		
+		
+		
 		// fill defence structures with guardRange
 		
-		// set flag at the exits of the map.
 		// create a squad per flag (2 guardClose, 2 guardRange, 1 medic)
 		// locate squads near spawn
 		// as soon there is a squad per flag, move squads to the flags
@@ -166,7 +230,10 @@
 	action: function(spawn) {
 		
 		if(!spawn.memory.sources) {
-		    this.fillSpawnSources(spawn);
+		    this.setInitialSpawnMemory(spawn);
+		}
+		if(!spawn.memory.flags) {
+		    this.setInitialFlagMemory(spawn);
 		}
 		
 		this.harvesting(spawn);
