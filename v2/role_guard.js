@@ -21,7 +21,7 @@ module.exports = {
 		
 		if(targets.length > 0) {
 			var target = targets[0];
-			creep.say('Attacking ' + target.name);
+			this.say(creep, 'Attacking ' + target.name);
 			creep.moveTo(target);
 			
 			if(creep.pos.inRangeTo(target, 2)) {

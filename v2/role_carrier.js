@@ -26,11 +26,11 @@ module.exports = {
 			if(source!==null) {
 				if(creep.energy > 0 && creep.pos.inRangeTo(spawn, 1)) {
 					creep.transferEnergy(spawn);
-					creep.say('Deliver Energy to' + spawn.name);
+					this.say(creep, 'Deliver Energy to' + spawn.name);
 					return;
 				} else if(creep.energy == creep.energyCapacity) {
 					creep.moveTo(spawn);
-					creep.say('On route to delivery energy to ' + spawn.name);
+					this.say(creep, 'On route to delivery energy to ' + spawn.name);
 					return;
 				} else if(creep.pos.inRangeTo(source, 2)) {
 					
@@ -45,7 +45,7 @@ module.exports = {
 						creep.moveTo(target);
 						target.transferEnergy(creep);
 					} else {
-						creep.say('Could not find miners');
+						this.say(creep, 'Could not find miners');
 					}
 					return;
 				} else {

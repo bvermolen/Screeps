@@ -27,19 +27,19 @@ module.exports = {
 		if(target!==null) {
 			if(creep.energy < creep.energyCapacity && creep.pos.inRangeTo(spawn, 1)) {
 				spawn.transferEnergy(creep);
-				creep.say('Collecting energy from ' + spawn.id);
+				this.say(creep, 'Collecting energy from ' + spawn.id);
 				return;
 			} else if(creep.energy === 0) {
 				creep.moveTo(spawn);
-				creep.say('On route to collect energy from ' + spawn.id);
+				this.say(creep, 'On route to collect energy from ' + spawn.id);
 				return;
 			} else if (creep.energy > 0 && creep.pos.inRangeTo(target, 1)) {
 				creep.build(target);
-				creep.say('Building ' + target.id);
+				this.say(creep, 'Building ' + target.id);
 				return;
 			} else if (creep.energy === creep.energyCapacity) {
 				creep.moveTo(target);
-				creep.say('Moving to ' + target.id);
+				this.say(creep, 'Moving to ' + target.id);
 				return;
 			}
 			

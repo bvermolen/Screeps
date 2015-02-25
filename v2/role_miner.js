@@ -25,11 +25,11 @@ module.exports = {
 
 			if(source!==null) {
 				if(creep.energy < creep.energyCapacity) {
-					creep.say('Mining ' + source.id);
+					this.say(creep, 'Mining ' + source.id);
 					creep.moveTo(source);
 					creep.harvest(source);
 				} else {
-					creep.say('Waiting for carrier');
+					this.say(creep, 'Waiting for carrier');
 				}
 				return;
 			}
