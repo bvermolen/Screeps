@@ -1,7 +1,7 @@
 /**
- * carrier
+ * role_carrier
  */
-module.exports = {
+var role_carrier = {
 	
 	create: function(spawn, creepMemory) {
 		var bodyParts = [Game.CARRY, Game.CARRY, Game.MOVE, Game.MOVE, Game.MOVE];
@@ -56,4 +56,6 @@ module.exports = {
 		}
 		this.idle(creep);
 	}
-}
+};
+
+module.exports = role_carrier;

@@ -40,14 +40,13 @@ var creepManager = {
 	},
 	
 	getRoles: function() {
-		var roles = [
-				'miner',
-				'carrier',
-				'guard',
-				'medic',
-				'builder',
-				];
-		return roles;
+        return [
+            'miner',
+            'carrier',
+            'guard',
+            'medic',
+            'builder'
+        ];
 	},
 	
 	getRoleNumbers: function(role) {
@@ -64,6 +63,6 @@ var creepManager = {
 	}
 	
 
-}
+};
 
 module.exports = creepManager;

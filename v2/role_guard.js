@@ -1,7 +1,7 @@
 /**
  * guard
  */
-module.exports = {
+var role_guard = {
 	
 	create: function(spawn, creepMemory) {
 		var bodyParts = [Game.TOUGH, Game.TOUGH, Game.MOVE, Game.RANGED_ATTACK, Game.ATTACK, Game.ATTACK];
@@ -16,7 +16,6 @@ module.exports = {
 	},
 	
 	action: function (creep) {
-		var spawn = require('control').getSpawn();
 		var targets = creep.room.find(Game.HOSTILE_CREEPS);
 		
 		if(targets.length > 0) {
@@ -34,4 +33,6 @@ module.exports = {
 			this.idleDefence(creep);
 		}
 	}
-}
+};
+
+module.exports = role_guard;

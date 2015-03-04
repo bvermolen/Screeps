@@ -19,7 +19,7 @@ var base = {
 			this.say(creep, 'Create distance from spawn ' + spawn.name);
 			creep.moveTo(25, 25);
 		} else {
-			this.say(creep, 'Idleing');
+			this.say(creep, 'Idling');
 		}
 	},
 	
@@ -36,6 +36,6 @@ var base = {
 		}
 		
 	}
-}
+};
 
 module.exports = base;

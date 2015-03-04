@@ -2,46 +2,19 @@
  * control
  */
  var control = {
-	
-	getSpawn: function() {
-		var spawns = Game.spawns;
-		
-		for(var s in spawns) {
-			return spawns[s];
-		}
+
+	getSpawn: function(room) {
+		var spawns = room.find(Game.MY_SPAWNS);
+
+        if(spawns.length > 0) {
+            return spawns[0];
+        }
+
 		return null;
 	},
 	
-	getExits: function(spawn) {
-		var exits = Array();
-		
-		var exit = null;
-
-		exit = spawn.room.find(Game.EXIT_TOP);
-		if(exit.length > 0) {
-			exits.push(exit[0]);
-		}
-
-		exit = spawn.room.find(Game.EXIT_BOTTOM);
-		if(exit.length > 0) {
-			exits.push(exit[0]);
-		}
-
-		exit = spawn.room.find(Game.EXIT_LEFT);
-		if(exit.length > 0) {
-			exits.push(exit[0]);
-		}
-
-		exit = spawn.room.find(Game.EXIT_RIGHT);
-		if(exit.length > 0) {
-			exits.push(exit[0]);
-		}
-		
-		return exits;
-	},
-	
 	setInitialSpawnMemory: function(spawn) {
-		spawn.memory.sources = Array();
+		spawn.memory.sources = new Array();
 
 		var sources = spawn.room.find(Game.SOURCES);
 		for(var i in sources)
@@ -59,7 +32,7 @@
 					pathInvalid: 0,
 					paths: paths,
 					activeMiners: 0,
-					activeCarriers: 0,
+					activeCarriers: 0
 				});
 			}
 		}
@@ -67,9 +40,9 @@
 	},
 	
 	setInitialFlagMemory: function(spawn) {
-		spawn.memory.flags = Array();
+		spawn.memory.flags = new Array();
 
-		var exits = this.getExits(spawn);
+		var exits = require('roomManager').getExits(spawn.room);
 		
 		for(var i in exits) {
 			var exit = exits[i];
@@ -94,7 +67,7 @@
 					distance: paths.length,
 					posX: flagLocation.x,
 					posY: flagLocation.y,
-					squad: 1,
+					squad: 1
 				});
 			}
 		}
@@ -151,8 +124,6 @@
 	},
 	
 	constructPathPlan: function(spawn, sourceMemory) {
-		var source = Game.getObjectById(sourceMemory.id);
-		
 		sourceMemory.pathInvalid = 0;
 		for(var p in sourceMemory.paths) {
 		    var path = sourceMemory.paths[p];
@@ -241,6 +212,6 @@
 		this.construction(spawn);
 		this.defence(spawn);
 	}
-}
+};
 
 module.exports = control;

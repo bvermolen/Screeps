@@ -1,7 +1,7 @@
 /**
  * medic
  */
-module.exports = {
+var role_medic = {
 	
 	create: function(spawn, creepMemory) {
 		var bodyParts = [Game.TOUGH, Game.MOVE, Game.MOVE, Game.HEAL];
@@ -16,7 +16,6 @@ module.exports = {
 	},
 	
 	action: function (creep) {
-		var spawn = require('control').getSpawn();
 		var target = creep.pos.findClosest(Game.MY_CREEPS, {
 			filter: function(object) {
 				return object.hits < object.hitsMax;
@@ -34,4 +33,6 @@ module.exports = {
 			this.idleDefence(creep);
 		}
 	}
-}
+};
+
+module.exports = role_medic;

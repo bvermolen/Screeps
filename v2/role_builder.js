@@ -1,7 +1,7 @@
 /**
- * builder
+ * role_builder
  */
-module.exports = {
+var role_builder = {
 	
 	create: function(spawn, creepMemory) {
 		var bodyParts = [Game.MOVE, Game.WORK, Game.WORK, Game.CARRY, Game.CARRY];
@@ -47,4 +47,6 @@ module.exports = {
 		}
 		this.idle(creep);
 	}
-}
+};
+
+module.exports = role_builder;

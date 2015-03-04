@@ -1,7 +1,7 @@
 /**
- * miner
+ * role_miner
  */
-module.exports = {
+var role_miner = {
 	
 	create: function(spawn, creepMemory) {
 		var bodyParts = [Game.WORK, Game.WORK, Game.CARRY, Game.CARRY, Game.MOVE];
@@ -17,7 +17,6 @@ module.exports = {
 	},
 	
 	action: function (creep) {
-		var spawn = require('control').getSpawn();
 
 		if(creep.memory.sourceID!==null) 
 		{
@@ -36,4 +35,6 @@ module.exports = {
 		}
 		this.idle(creep);
 	}
-}
+};
+
+module.exports = role_miner;

@@ -30,7 +30,7 @@
 	action: function (spawn) {
 		
 		if(!spawn.memory.buildQueue) {
-			spawn.memory.buildQueue = Array();
+			spawn.memory.buildQueue = new Array();
 
 			this.addToQueue(spawn, 'miner');
 			this.addToQueue(spawn, 'miner');
@@ -57,6 +57,6 @@
 
 		}
 	}
-}
+};
 
 module.exports = creepFactory;
