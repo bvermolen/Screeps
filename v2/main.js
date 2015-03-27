@@ -29,7 +29,14 @@ for(var i in rooms) {
 		require('survivalCreepManager').action(spawn);
 		
 	} else if (room.mode===Game.MODE_ARENA) {
-		
+
+		for (var creepKey in Game.creeps) {
+			var creep = Game.creeps[creepKey];
+			
+			if(creep.my===true) {
+				require('arenaControl').action(creep);
+			}
+		}
 		
 	} else {
 			console.log('Unknown room mode '+room.mode);
