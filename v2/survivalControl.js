@@ -1,7 +1,7 @@
 /**
- * control
+ * survivalControl
  */
- var control = {
+ var survivalControl = {
 
 	getSpawn: function(room) {
 		var spawns = room.find(Game.MY_SPAWNS);
@@ -42,7 +42,7 @@
 	setInitialFlagMemory: function(spawn) {
 		spawn.memory.flags = new Array();
 
-		var exits = require('roomManager').getExits(spawn.room);
+		var exits = require('survivalRoomManager').getExits(spawn.room);
 		
 		for(var i in exits) {
 			var exit = exits[i];

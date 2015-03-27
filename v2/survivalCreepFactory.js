@@ -1,7 +1,7 @@
 /**
- * creepFactory
+ * survivalCreepFactory
  */
- var creepFactory = {
+ var survivalCreepFactory = {
 
 	addToQueue: function(spawn, role, creepMemory) {
 		
@@ -49,7 +49,7 @@
 		
 			var creep = _.take(spawn.memory.buildQueue);
 			
-			var result = require('creepManager').getRoleObject(creep.role).create(spawn, creep.creepMemory);
+			var result = require('survivalCreepManager').getRoleObject(creep.role).create(spawn, creep.creepMemory);
 			if(result===true) {
 				console.log('Start spawning ' + creep.role+": "+result);
 				spawn.memory.buildQueue = _.drop(spawn.memory.buildQueue);
@@ -59,4 +59,4 @@
 	}
 };
 
-module.exports = creepFactory;
+module.exports = survivalCreepFactory;

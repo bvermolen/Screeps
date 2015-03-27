@@ -1,13 +1,13 @@
 /**
- * role_carrier
+ * survivalRole_carrier
  */
-var role_carrier = {
+var survivalRole_carrier = {
 	
 	create: function(spawn, creepMemory) {
 		var bodyParts = [Game.CARRY, Game.CARRY, Game.MOVE, Game.MOVE, Game.MOVE];
 		creepMemory.role = 'carrier';
 		creepMemory.sourceID = null;
-		var numCreeps = require('creepManager').getRoleNumbers(creepMemory.role);
+		var numCreeps = require('survivalCreepManager').getRoleNumbers(creepMemory.role);
 		var result = spawn.createCreep(bodyParts, creepMemory.role + '_' + numCreeps, creepMemory);
 		
 		if(_.isString(result)) {
@@ -17,7 +17,7 @@ var role_carrier = {
 	},
 	
 	action: function (creep) {
-		var spawn = require('control').getSpawn();
+		var spawn = require('survivalControl').getSpawn();
 
 		if(creep.memory.sourceID!==null) 
 		{
@@ -58,4 +58,4 @@ var role_carrier = {
 	}
 };
 
-module.exports = role_carrier;
+module.exports = survivalRole_carrier;

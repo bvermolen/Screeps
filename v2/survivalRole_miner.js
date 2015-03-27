@@ -1,13 +1,13 @@
 /**
- * role_miner
+ * survivalRole_miner
  */
-var role_miner = {
+var survivalRole_miner = {
 	
 	create: function(spawn, creepMemory) {
 		var bodyParts = [Game.WORK, Game.WORK, Game.CARRY, Game.CARRY, Game.MOVE];
 		creepMemory.role = 'miner';
 		creepMemory.sourceID = null;
-		var numCreeps = require('creepManager').getRoleNumbers(creepMemory.role);
+		var numCreeps = require('survivalCreepManager').getRoleNumbers(creepMemory.role);
 		var result = spawn.createCreep(bodyParts, creepMemory.role + '_' + numCreeps, creepMemory);
 		
 		if(_.isString(result)) {
@@ -37,4 +37,4 @@ var role_miner = {
 	}
 };
 
-module.exports = role_miner;
+module.exports = survivalRole_miner;

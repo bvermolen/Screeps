@@ -1,7 +1,7 @@
 /**
- * roomManager
+ * survivalRoomManager
  */
-var roomManager = {
+var survivalRoomManager = {
 
     getExits: function(room) {
         var exits = new Array();
@@ -48,4 +48,4 @@ var roomManager = {
 
 };
 
-module.exports = roomManager;
+module.exports = survivalRoomManager;

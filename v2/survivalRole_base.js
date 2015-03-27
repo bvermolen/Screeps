@@ -1,7 +1,7 @@
 /**
- * role_base
+ * survivalRole_base
  */
-var base = {
+var survivalRole_base = {
 	
 	say: function(creep, message) {
 		//creep.say(message);
@@ -10,7 +10,7 @@ var base = {
 	},
 	
 	idle: function(creep) {
-		var spawn = require('control').getSpawn();
+		var spawn = require('survivalControl').getSpawn();
 		
 		if (!creep.pos.inRangeTo(spawn, 6)) {
 			this.say(creep, 'Returning to ' + spawn.name);
@@ -24,7 +24,7 @@ var base = {
 	},
 	
 	idleDefence: function(creep) {
-		var spawn = require('control').getSpawn();
+		var spawn = require('survivalControl').getSpawn();
 		
 		if(creep.memory.squad) {
 			
@@ -38,4 +38,4 @@ var base = {
 	}
 };
 
-module.exports = base;
+module.exports = survivalRole_base;

@@ -1,12 +1,12 @@
 /**
- * role_builder
+ * survivalRole_builder
  */
-var role_builder = {
+var survivalRole_builder = {
 	
 	create: function(spawn, creepMemory) {
 		var bodyParts = [Game.MOVE, Game.WORK, Game.WORK, Game.CARRY, Game.CARRY];
 		creepMemory.role = 'builder';
-		var numCreeps = require('creepManager').getRoleNumbers(creepMemory.role);
+		var numCreeps = require('survivalCreepManager').getRoleNumbers(creepMemory.role);
 		var result = spawn.createCreep(bodyParts, creepMemory.role + '_' + numCreeps, creepMemory);
 		
 		if(_.isString(result)) {
@@ -16,7 +16,7 @@ var role_builder = {
 	},
 	
 	action: function (creep) {
-		var spawn = require('control').getSpawn();
+		var spawn = require('survivalControl').getSpawn();
 	 
 	 	var target = spawn.pos.findClosest(Game.CONSTRUCTION_SITES, {
 			filter: function(object) {
@@ -49,4 +49,4 @@ var role_builder = {
 	}
 };
 
-module.exports = role_builder;
+module.exports = survivalRole_builder;

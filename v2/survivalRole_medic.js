@@ -1,12 +1,12 @@
 /**
- * medic
+ * survivalRole_medic
  */
-var role_medic = {
+var survivalRole_medic = {
 	
 	create: function(spawn, creepMemory) {
 		var bodyParts = [Game.TOUGH, Game.MOVE, Game.MOVE, Game.HEAL];
 		creepMemory.role = 'medic';
-		var numCreeps = require('creepManager').getRoleNumbers(creepMemory.role);
+		var numCreeps = require('survivalCreepManager').getRoleNumbers(creepMemory.role);
 		var result = spawn.createCreep(bodyParts, creepMemory.role + '_' + numCreeps, creepMemory);
 		
 		if(_.isString(result)) {
@@ -35,4 +35,4 @@ var role_medic = {
 	}
 };
 
-module.exports = role_medic;
+module.exports = survivalRole_medic;

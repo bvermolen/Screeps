@@ -10,21 +10,31 @@ var rooms = Game.rooms;
 for(var i in rooms) {
     var room = rooms[i];
 
-    if(!room.memory.initialised) {
-        require('roomManager').initialise(room);
-    }
+	if(room.mode===Game.MODE_SURVIVAL) {
+		
+		if(!room.memory.initialised) {
+			require('survivalRoomManager').initialise(room);
+		}
 
-    var spawn = require('control').getSpawn(room);
+		var spawn = require('survivalControl').getSpawn(room);
 
-    if(spawn===null) {
+		if(spawn===null) {
 
-        console.log('Waiting for spawn');
-        continue;
-    }
+			console.log('Waiting for spawn');
+			continue;
+		}
 
-    require('control').action(spawn);
-    require('creepFactory').action(spawn);
-    require('creepManager').action(spawn);
+		require('survivalControl').action(spawn);
+		require('survivalCreepFactory').action(spawn);
+		require('survivalCreepManager').action(spawn);
+		
+	} else if (room.mode===Game.MODE_ARENA) {
+		
+		
+	} else {
+			console.log('Unknown room mode '+room.mode);
+		
+	}
 
 }
 

@@ -1,7 +1,7 @@
 /**
- * creepManager
+ * survivalCreepManager
  */
-var creepManager = {
+var survivalCreepManager = {
 
 	updateCreepMemory: function(creep) {
 		creep.memory.energy = creep.energy;
@@ -11,8 +11,8 @@ var creepManager = {
 	
 	getRoleObject: function(role) {
 		
-		var base = require('role_base');
-		var obj = require('role_'+role);
+		var base = require('survivalRole_base');
+		var obj = require('survivalRole_'+role);
 		
 		for (var k in base) {
 			if (!obj.hasOwnProperty(k)) {
@@ -65,4 +65,4 @@ var creepManager = {
 
 };
 
-module.exports = creepManager;
+module.exports = survivalCreepManager;

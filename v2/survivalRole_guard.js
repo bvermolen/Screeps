@@ -1,12 +1,12 @@
 /**
- * guard
+ * survivalRole_guard
  */
-var role_guard = {
+var survivalRole_guard = {
 	
 	create: function(spawn, creepMemory) {
 		var bodyParts = [Game.TOUGH, Game.TOUGH, Game.MOVE, Game.RANGED_ATTACK, Game.ATTACK, Game.ATTACK];
 		creepMemory.role = 'guard';
-		var numCreeps = require('creepManager').getRoleNumbers(creepMemory.role);
+		var numCreeps = require('survivalCreepManager').getRoleNumbers(creepMemory.role);
 		var result = spawn.createCreep(bodyParts, creepMemory.role + '_' + numCreeps, creepMemory);
 		
 		if(_.isString(result)) {
@@ -35,4 +35,4 @@ var role_guard = {
 	}
 };
 
-module.exports = role_guard;
+module.exports = survivalRole_guard;
