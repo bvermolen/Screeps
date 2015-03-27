@@ -214,4 +214,4 @@
 	}
 };
 
-module.exports = control;
+module.exports = survivalControl;
